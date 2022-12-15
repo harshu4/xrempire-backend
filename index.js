@@ -11,7 +11,7 @@ const { Server } = require("socket.io");
 const io = new Server(server,{ cors: { origin: '*' } });
 const mongoose = require('mongoose');
 
-
+const PORT = process.env.PORT || 3000
 
 const xrpl = require('xrpl')
 let wallet;
@@ -291,7 +291,7 @@ async function handlesignin(subscription, socket) {
          */
         const result = await Sdk.payload.get(resolveData.payload_uuidv4)
         console.log('User token:', result.application.issued_user_token)
-
+gi
         const instance = await usermodel.findOneAndDelete({ id: result.response.account });
         
         if (!instance) {
@@ -334,13 +334,13 @@ async function handlebuy(subscription, socket) {
 
 
 
-server.listen(3000, async (error) => {
+server.listen(PORT, async (error) => {
 
     if (!error) {
         await mongoose.connect('mongodb+srv://admin:xrpltomoon@cluster0.k2mwqyc.mongodb.net/?retryWrites=true&w=majority');
         await client.connect()
         wallet = xrpl.Wallet.fromSeed(seed)
-        console.log("Server is Successfully Running,and App is listening on port " + 3000)
+        console.log("Server is Successfully Running,and App is listening on port " + PORT)
     }
     else
         console.log("Error occurred, server can't start", error);
