@@ -319,8 +319,7 @@ async function handlebuy(subscription, socket) {
 
     if (resolveData.signed === true) {
         console.log('Woohoo! The sign request was signed :)')
-        await assetmodel.deleteOne({_id:socket.id});
-       
+        
         
 
         socket.emit("done");
