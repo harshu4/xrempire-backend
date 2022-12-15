@@ -292,8 +292,8 @@ async function handlesignin(subscription, socket) {
         const result = await Sdk.payload.get(resolveData.payload_uuidv4)
         console.log('User token:', result.application.issued_user_token)
 gi
-        const instance = await usermodel.findOneAndDelete({ id: result.response.account });
-        
+        const instance = await usermodel.findOne({ id: result.response.account });
+        socket.id = instance._id;
         if (!instance) {
             const userm = new usermodel;
             console.log(result.response.account);
@@ -319,7 +319,7 @@ async function handlebuy(subscription, socket) {
 
     if (resolveData.signed === true) {
         console.log('Woohoo! The sign request was signed :)')
-
+        await assetmodel.deleteOne({_id:socket.id});
        
         
 
